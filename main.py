@@ -23,3 +23,48 @@ with st.expander('Analyze CSV/TXT'):
     def analyze_sentiment(text):
         blob = TextBlob(text)
         return round(blob.sentiment.polarity, 2), round(blob.sentiment.subjectivity, 2)
+
+    if upl:
+        content = upl.getvalue().decode("utf-8")
+        if upl.type == 'text/plain':  # Check if the uploaded file is a TXT file
+            # Perform sentiment analysis for each line in the text file
+            lines = content.split('\n')
+            results = []
+            for line in lines:
+                polarity, subjectivity = analyze_sentiment(line)
+                results.append({'Text': line, 'Polarity': polarity, 'Subjectivity': subjectivity})
+            df_results = pd.DataFrame(results)
+            st.write(df_results)
+
+            # Option to download sentiment analysis results for text file
+            st.download_button(
+                label="Download Sentiment Analysis Results",
+                data=df_results.to_csv().encode('utf-8'),
+                file_name='sentiment_analysis_results.csv',
+                mime='text/csv',
+            )
+        else:
+            df = pd.read_excel(upl, engine='openpyxl')
+            del df['Unnamed: 0']
+            df['Polarity'], df['Subjectivity'] = zip(*df['tweets'].apply(analyze_sentiment))
+            st.write(df.head(10))
+
+            fig, ax = plt.subplots()
+            df['analysis'].value_counts().plot(kind='bar', ax=ax)
+            ax.set_xlabel('Sentiment')
+            ax.set_ylabel('Count')
+            ax.set_title('Sentiment Analysis')
+            st.pyplot(fig)
+
+            @st.cache
+            def convert_df(df):
+                return df.to_csv().encode('utf-8')
+
+            csv = convert_df(df)
+
+            st.download_button(
+                label="Download data as CSV",
+                data=csv,
+                file_name='sentiment.csv',
+                mime='text/csv',
+            )
