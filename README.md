@@ -20,7 +20,7 @@ To run the application locally, follow these steps:
 4. Run the Streamlit application:
 
          streamlit run app.py
-   Access the application in your web browser at the provided URL (typically http://localhost:8501).
+   
 
 # Usage
 Once the application is running, you can:
