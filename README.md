@@ -11,7 +11,7 @@ To run the application locally, follow these steps:
 
 2. Navigate to the project directory:
 
-         cd sentiment-analysis-web-app
+         cd sentimenttextfile
 
 3. Install the required dependencies:
 
