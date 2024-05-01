@@ -33,11 +33,11 @@ Once the application is running, you can:
 # File Structure
 The project directory contains the following files:
 
-* app.py: The main Streamlit application script.
+* main.py: The main Streamlit application script.
 * requirements.txt: A text file listing all the required Python dependencies.
 * README.md: The project's README file providing information and instructions.
-* LICENSE: A license file specifying the project's usage rights and permissions.
-* data/: A directory containing sample data files for testing the application.
+
+
 
 # Contributors
 Harshvardhan Pasalkar
